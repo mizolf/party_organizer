@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:party_organizer/models/party.dart';
 import 'package:party_organizer/screens/party_details.dart';
@@ -15,21 +16,26 @@ class PartyListItem extends StatelessWidget {
       height: 170,
       width: MediaQuery.sizeOf(context).width,
       margin: const EdgeInsets.only(bottom: 20),
-      decoration: BoxDecoration(border: Border.all()),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            decoration: BoxDecoration(border: Border.all()),
+            width: 70,
             child: Column(
               children: [
-                const Text(
-                  'dan',
-                  style: TextStyle(fontSize: 24),
+                Text(
+                  party.startTime.day.toString(),
+                  style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold),
                 ),
-                const Text(
-                  'mjesec',
-                  style: TextStyle(fontSize: 24),
+                Text(
+                  DateFormat.MMM().format(party.startTime),
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 )
               ],
             ),
@@ -37,12 +43,76 @@ class PartyListItem extends StatelessWidget {
           const SizedBox(
             width: 30,
           ),
-          Container(
-            height: 170,
-            width: 250,
-            decoration: BoxDecoration(
-              image: DecorationImage(image: image, fit: BoxFit.cover),
-              borderRadius: BorderRadius.circular(20),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                PageTransition(
+                  child: PartyDetails(
+                    party: party,
+                  ),
+                  type: PageTransitionType.fade,
+                ),
+              );
+            },
+            child: Container(
+              height: 170,
+              width: 250,
+              decoration: BoxDecoration(
+                image: DecorationImage(image: image, fit: BoxFit.cover),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black54.withOpacity(0.7),
+                      Colors.black54.withOpacity(0.4),
+                      Colors.black54.withOpacity(0.3),
+                    ],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        party.title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.access_time,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            '${DateFormat.H().format(party.startTime)} h',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ],

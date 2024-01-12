@@ -30,4 +30,13 @@ final parties = [
     ],
     isAlcNeeded: true,
   ),
+  Party(
+    title: 'Godisnjica mature',
+    startTime: DateTime(2024, 10, 10, 19, 00),
+    musicType: [
+      MusicType.Balkan,
+      MusicType.Rock,
+    ],
+    isAlcNeeded: false,
+  ),
 ];
