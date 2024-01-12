@@ -13,6 +13,10 @@ class PartyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 227, 227, 227),
+          background: const Color.fromARGB(255, 227, 227, 227),
+        ),
         fontFamily: GoogleFonts.lato().fontFamily,
         useMaterial3: true,
       ),
