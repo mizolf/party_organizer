@@ -59,46 +59,58 @@ class _PartyListState extends State<PartyList> {
         title: const Text('Organizacija partyja'),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            FadeInUp(
-              duration: const Duration(milliseconds: 1500),
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: TextField(
-                  controller: textController,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Traži zabave...',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.grey,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              FadeInUp(
+                duration: const Duration(milliseconds: 1500),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: TextField(
+                    controller: textController,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Traži zabave...',
+                      hintStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            ListView.builder(
-              itemCount: parties.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) => FadeInUp(
-                duration: const Duration(milliseconds: 1500),
-                child: PartyListItem(
-                  party: parties[index],
-                  image: AssetImage('assets/images/home.jpeg'),
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                width: MediaQuery.sizeOf(context).width,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: parties.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => FadeInUp(
+                          duration: const Duration(milliseconds: 1500),
+                          child: PartyListItem(
+                            party: parties[index],
+                            image: const AssetImage('assets/images/home.jpeg'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

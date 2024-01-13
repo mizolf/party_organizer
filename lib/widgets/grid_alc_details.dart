@@ -41,10 +41,16 @@ class GridAlcDetails extends StatelessWidget {
               const SizedBox(
                 width: 8,
               ),
-              Text(
-                alc ? 'Osigurano' : 'Nije osigurano',
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(
+                      alc ? 'Osigurano' : 'Nije osigurano',
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

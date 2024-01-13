@@ -25,62 +25,65 @@ class PartyDetails extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            FadeIn(
-              duration: const Duration(milliseconds: 1000),
-              child: Container(
-                height: 250,
-                width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              FadeIn(
+                duration: const Duration(milliseconds: 1000),
+                child: Container(
+                  height: 250,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    boxShadow: const [
+                      BoxShadow(blurRadius: 5.0, offset: Offset(2, 3)),
+                    ],
+                    image: const DecorationImage(
+                      image: AssetImage('assets/images/home.jpeg'),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+              ),
+              Container(
+                height: MediaQuery.sizeOf(context).height - 360,
+                margin: const EdgeInsets.only(
+                  top: 8,
+                ),
                 decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(blurRadius: 5.0, offset: Offset(2, 3)),
-                  ],
-                  image: const DecorationImage(
-                    image: AssetImage('assets/images/home.jpeg'),
-                    fit: BoxFit.cover,
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.transparent,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GridView(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                    children: [
+                      FadeInLeft(
+                          duration: const Duration(milliseconds: 1500),
+                          child: GridTimeDetails(time: party.startTime)),
+                      FadeInDown(
+                          duration: const Duration(milliseconds: 1500),
+                          child: GridAlcDetails(alc: party.isAlcNeeded)),
+                      FadeInUp(
+                          duration: const Duration(milliseconds: 1500),
+                          child: GridMusicDetails(music: party.musicType)),
+                      FadeInRight(
+                        duration: const Duration(milliseconds: 1500),
+                        child: GridCostumeDetails(
+                          costume: party.costume,
+                        ),
+                      )
+                    ],
                   ),
-                  borderRadius: BorderRadius.circular(25),
                 ),
               ),
-            ),
-            Container(
-              height: MediaQuery.sizeOf(context).height - 360,
-              margin: const EdgeInsets.only(
-                top: 8,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.transparent,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GridView(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  children: [
-                    FadeInLeft(
-                        duration: const Duration(milliseconds: 1500),
-                        child: GridTimeDetails(time: party.startTime)),
-                    FadeInDown(
-                        duration: const Duration(milliseconds: 1500),
-                        child: GridAlcDetails(alc: party.isAlcNeeded)),
-                    FadeInUp(
-                        duration: const Duration(milliseconds: 1500),
-                        child: GridMusicDetails(music: party.musicType)),
-                    FadeInRight(
-                      duration: const Duration(milliseconds: 1500),
-                      child: GridCostumeDetails(
-                        costume: party.costume,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
