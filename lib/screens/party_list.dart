@@ -1,10 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:party_organizer/dummy_data.dart/dummy_data.dart';
-import 'package:party_organizer/models/party.dart';
-import 'package:party_organizer/screens/party_details.dart';
+import 'package:party_organizer/screens/planned_screen.dart';
 import 'package:party_organizer/widgets/party_list_item.dart';
 
 class PartyList extends StatefulWidget {
@@ -36,12 +34,21 @@ class _PartyListState extends State<PartyList> {
               ListTile(
                 leading: const Icon(Icons.house),
                 title: const Text('Naslovna'),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.timer),
                 title: const Text('Planirano'),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    PageTransition(
+                      child: PlannedScreen(),
+                      type: PageTransitionType.fade,
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -83,9 +90,12 @@ class _PartyListState extends State<PartyList> {
             ListView.builder(
               itemCount: parties.length,
               shrinkWrap: true,
-              itemBuilder: (context, index) => PartyListItem(
-                party: parties[index],
-                image: AssetImage('assets/images/home.jpeg'),
+              itemBuilder: (context, index) => FadeInUp(
+                duration: const Duration(milliseconds: 1500),
+                child: PartyListItem(
+                  party: parties[index],
+                  image: AssetImage('assets/images/home.jpeg'),
+                ),
               ),
             ),
           ],

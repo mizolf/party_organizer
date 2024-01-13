@@ -93,7 +93,7 @@ class PartyListItem extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.access_time,
                             color: Colors.white,
                           ),
@@ -102,7 +102,7 @@ class PartyListItem extends StatelessWidget {
                           ),
                           Text(
                             '${DateFormat.H().format(party.startTime)} h',
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ],
                       ),

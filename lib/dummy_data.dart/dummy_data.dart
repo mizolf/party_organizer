@@ -8,6 +8,7 @@ final parties = [
       MusicType.Balkan,
     ],
     isAlcNeeded: true,
+    costume: 'Casual',
   ),
   Party(
     title: 'Nogometni kviz',
@@ -18,6 +19,7 @@ final parties = [
       MusicType.HipHop,
     ],
     isAlcNeeded: false,
+    costume: 'Casual',
   ),
   Party(
     title: 'Dnevni party',
@@ -29,6 +31,7 @@ final parties = [
       MusicType.Techno,
     ],
     isAlcNeeded: true,
+    costume: 'Formalno',
   ),
   Party(
     title: 'Godisnjica mature',
@@ -38,5 +41,6 @@ final parties = [
       MusicType.Rock,
     ],
     isAlcNeeded: false,
+    costume: 'Formalno',
   ),
 ];
