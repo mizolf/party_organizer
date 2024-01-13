@@ -56,7 +56,7 @@ class PartyListItem extends StatelessWidget {
             },
             child: Container(
               height: 170,
-              width: 250,
+              width: MediaQuery.sizeOf(context).width - 120,
               decoration: BoxDecoration(
                 image: DecorationImage(image: image, fit: BoxFit.cover),
                 borderRadius: BorderRadius.circular(20),
