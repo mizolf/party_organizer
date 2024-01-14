@@ -36,6 +36,7 @@ class _PartyListState extends State<PartyList> {
                 title: const Text('Naslovna'),
                 onTap: () {
                   Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 },
               ),
               ListTile(
