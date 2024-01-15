@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:party_organizer/dummy_data.dart/dummy_data.dart';
+import 'package:party_organizer/models/party.dart';
 import 'package:party_organizer/screens/planned_screen.dart';
 import 'package:party_organizer/widgets/party_list_item.dart';
 
@@ -16,6 +17,45 @@ class PartyList extends StatefulWidget {
 
 class _PartyListState extends State<PartyList> {
   final textController = TextEditingController();
+  List<Party> parties = allParties;
+  final List<Party> _favoriteParties = [];
+
+  void _showInfoMessage(String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  void _togglePartyFavoriteStatus(Party party) {
+    final isExisting = _favoriteParties.contains(party);
+    if (isExisting) {
+      setState(() {
+        _favoriteParties.remove(party);
+        _showInfoMessage('Uklonjeno iz planirano');
+      });
+    } else {
+      setState(() {
+        _favoriteParties.add(party);
+        _showInfoMessage('Dodano u planirano');
+      });
+    }
+  }
+
+  void _searchParty(String query) {
+    final suggestions = allParties.where((party) {
+      final partyTitle = party.title.toLowerCase();
+      final input = query.toLowerCase();
+
+      return partyTitle.contains(input);
+    }).toList();
+
+    setState(() {
+      parties = suggestions;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +85,10 @@ class _PartyListState extends State<PartyList> {
                 onTap: () {
                   Navigator.of(context).push(
                     PageTransition(
-                      child: PlannedScreen(),
+                      child: PlannedScreen(
+                        parties: _favoriteParties,
+                        togglePartyFavoriteStatus: _togglePartyFavoriteStatus,
+                      ),
                       type: PageTransitionType.fade,
                     ),
                   );
@@ -83,6 +126,7 @@ class _PartyListState extends State<PartyList> {
                         color: Colors.grey,
                       ),
                     ),
+                    onChanged: _searchParty,
                   ),
                 ),
               ),
@@ -103,6 +147,7 @@ class _PartyListState extends State<PartyList> {
                           child: PartyListItem(
                             party: parties[index],
                             image: const AssetImage('assets/images/home.jpeg'),
+                            onToggleFavorite: _togglePartyFavoriteStatus,
                           ),
                         ),
                       ),

@@ -1,6 +1,6 @@
 import 'package:party_organizer/models/party.dart';
 
-final parties = [
+final allParties = [
   Party(
     title: 'Pivo Party',
     startTime: DateTime(2024, 1, 21, 20, 00),
