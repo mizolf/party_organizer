@@ -135,24 +135,22 @@ class _PartyListState extends State<PartyList> {
               ),
               Container(
                 width: MediaQuery.sizeOf(context).width,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: parties.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => FadeInUp(
-                          duration: const Duration(milliseconds: 1500),
-                          child: PartyListItem(
-                            party: parties[index],
-                            image: const AssetImage('assets/images/home.jpeg'),
-                            onToggleFavorite: _togglePartyFavoriteStatus,
-                          ),
+                child: Column(
+                  children: [
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: parties.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => FadeInUp(
+                        duration: const Duration(milliseconds: 1500),
+                        child: PartyListItem(
+                          party: parties[index],
+                          image: const AssetImage('assets/images/home.jpeg'),
+                          onToggleFavorite: _togglePartyFavoriteStatus,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],
