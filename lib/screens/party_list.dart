@@ -203,7 +203,6 @@ class _PartyListState extends State<PartyList> {
                             duration: const Duration(milliseconds: 1500),
                             child: PartyListItem(
                               party: parties[index],
-                              image: Image.network(parties[index].imagePath),
                               onToggleFavorite: _togglePartyFavoriteStatus,
                             ),
                           ),

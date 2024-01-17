@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class GridTimeDetails extends StatelessWidget {
   const GridTimeDetails({super.key, required this.time, required this.date});
@@ -58,7 +57,7 @@ class GridTimeDetails extends StatelessWidget {
           ),
           Text(
             date,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ],
       ),

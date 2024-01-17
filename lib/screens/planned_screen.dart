@@ -40,7 +40,6 @@ class _PlannedScreenState extends State<PlannedScreen> {
                         duration: const Duration(milliseconds: 1500),
                         child: PartyListItem(
                           party: widget.parties[index],
-                          image: Image.network(widget.parties[index].imagePath),
                           onToggleFavorite: (party) {
                             setState(() {
                               widget.togglePartyFavoriteStatus(party);

@@ -6,14 +6,14 @@ class Party {
       required this.isAlcNeeded,
       required this.costume,
       required this.date,
-      required this.imagePath});
+      required this.image});
   final String title;
   final String startTime;
   final String date;
   final List<String> musicType;
   final bool isAlcNeeded;
   final String costume;
-  final String imagePath;
+  final String image;
 
   Map<String, dynamic> toMap() {
     return {
@@ -23,7 +23,7 @@ class Party {
       'musicType': musicType,
       'isAlcNeeded': isAlcNeeded,
       'costume': costume,
-      'imagePath': imagePath,
+      'image': image,
     };
   }
 
@@ -35,7 +35,7 @@ class Party {
       musicType: List<String>.from(map['musicType'] ?? []),
       isAlcNeeded: map['isAlcNeeded'] ?? false,
       costume: map['costume'] ?? '',
-      imagePath: map['imagePath'] ?? '',
+      image: map['image'] ?? '',
     );
   }
 }

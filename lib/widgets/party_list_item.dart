@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:party_organizer/models/party.dart';
 import 'package:party_organizer/screens/party_details.dart';
 
 class PartyListItem extends StatelessWidget {
   const PartyListItem(
-      {super.key,
-      required this.party,
-      required this.image,
-      required this.onToggleFavorite});
+      {super.key, required this.party, required this.onToggleFavorite});
 
   final Party party;
-  final Image image;
   final void Function(Party party) onToggleFavorite;
 
   @override
@@ -67,8 +62,7 @@ class PartyListItem extends StatelessWidget {
               width: MediaQuery.sizeOf(context).width - 120,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage(party.imagePath, scale: 1.0),
-                    fit: BoxFit.cover),
+                    image: NetworkImage(party.image), fit: BoxFit.cover),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Container(
