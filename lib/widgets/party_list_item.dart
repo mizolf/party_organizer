@@ -5,10 +5,15 @@ import 'package:party_organizer/models/party.dart';
 import 'package:party_organizer/screens/party_details.dart';
 
 class PartyListItem extends StatelessWidget {
-  const PartyListItem({super.key, required this.party, required this.image});
+  const PartyListItem(
+      {super.key,
+      required this.party,
+      required this.image,
+      required this.onToggleFavorite});
 
   final Party party;
   final AssetImage image;
+  final void Function(Party party) onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +54,7 @@ class PartyListItem extends StatelessWidget {
                 PageTransition(
                   child: PartyDetails(
                     party: party,
+                    onToggleFavorite: onToggleFavorite,
                   ),
                   type: PageTransitionType.fade,
                 ),

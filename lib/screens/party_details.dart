@@ -7,9 +7,11 @@ import 'package:party_organizer/widgets/grid_music_details.dart';
 import 'package:party_organizer/widgets/grid_time_details.dart';
 
 class PartyDetails extends StatelessWidget {
-  const PartyDetails({super.key, required this.party});
+  const PartyDetails(
+      {super.key, required this.party, required this.onToggleFavorite});
 
   final Party party;
+  final void Function(Party party) onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +21,10 @@ class PartyDetails extends StatelessWidget {
         title: Text(party.title),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.star),
+            onPressed: () {
+              onToggleFavorite(party);
+            },
+            icon: const Icon(Icons.star_border_outlined),
           ),
         ],
       ),
