@@ -69,7 +69,8 @@ class PartyDetails extends StatelessWidget {
                     children: [
                       FadeInLeft(
                           duration: const Duration(milliseconds: 1500),
-                          child: GridTimeDetails(time: party.startTime)),
+                          child: GridTimeDetails(
+                              time: party.startTime, date: party.date)),
                       FadeInDown(
                           duration: const Duration(milliseconds: 1500),
                           child: GridAlcDetails(alc: party.isAlcNeeded)),

@@ -12,7 +12,7 @@ class PartyListItem extends StatelessWidget {
       required this.onToggleFavorite});
 
   final Party party;
-  final AssetImage image;
+  final Image image;
   final void Function(Party party) onToggleFavorite;
 
   @override
@@ -29,19 +29,21 @@ class PartyListItem extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  party.startTime.day.toString(),
+                  party.date.split(' ')[0],
                   style: const TextStyle(
                       fontSize: 24,
                       color: Colors.blue,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  DateFormat.MMM().format(party.startTime),
+                  (party.date.split(' ').length > 1)
+                      ? party.date.split(' ')[1]
+                      : '',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -64,7 +66,9 @@ class PartyListItem extends StatelessWidget {
               height: 170,
               width: MediaQuery.sizeOf(context).width - 120,
               decoration: BoxDecoration(
-                image: DecorationImage(image: image, fit: BoxFit.cover),
+                image: DecorationImage(
+                    image: NetworkImage(party.imagePath, scale: 1.0),
+                    fit: BoxFit.cover),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Container(
@@ -107,7 +111,7 @@ class PartyListItem extends StatelessWidget {
                             width: 8,
                           ),
                           Text(
-                            '${DateFormat.H().format(party.startTime)} h',
+                            party.startTime,
                             style: const TextStyle(color: Colors.white),
                           ),
                         ],

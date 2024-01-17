@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:party_organizer/models/party.dart';
 
 class GridMusicDetails extends StatelessWidget {
   const GridMusicDetails({super.key, required this.music});
 
-  final List<MusicType> music;
+  final List<String> music;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +34,13 @@ class GridMusicDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.music_note,
-                size: 32,
+              const Column(
+                children: [
+                  Icon(
+                    Icons.music_note,
+                    size: 32,
+                  ),
+                ],
               ),
               const SizedBox(
                 width: 10,
@@ -48,10 +51,7 @@ class GridMusicDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      music
-                          .map((musicType) =>
-                              musicType.toString().split('.').last)
-                          .join(', '),
+                      music.toString().replaceAll("]", "").replaceAll("[", ""),
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold),
                     ),

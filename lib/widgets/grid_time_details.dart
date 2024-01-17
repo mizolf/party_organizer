@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class GridTimeDetails extends StatelessWidget {
-  const GridTimeDetails({super.key, required this.time});
+  const GridTimeDetails({super.key, required this.time, required this.date});
 
-  final DateTime time;
+  final String time;
+  final String date;
 
   @override
   Widget build(BuildContext context) {
@@ -31,21 +32,20 @@ class GridTimeDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Icon(
-                Icons.access_alarm,
-                size: 32,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.access_alarm,
+                    size: 32,
+                  ),
+                ],
               ),
-              const SizedBox(
+              SizedBox(
                 width: 8,
-              ),
-              Text(
-                DateFormat.Hm().format(time).toString(),
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -53,7 +53,11 @@ class GridTimeDetails extends StatelessWidget {
             height: 8,
           ),
           Text(
-            DateFormat.yMMMd().format(time).toString(),
+            time,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            date,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ],
