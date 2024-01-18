@@ -60,8 +60,8 @@ class _PartyListState extends State<PartyList> {
           .where('title', isEqualTo: party.title)
           .where('startTime', isEqualTo: party.startTime)
           .where('date', isEqualTo: party.date)
-          .get()
-          .then((querySnapshot) {
+          .snapshots()
+          .listen((querySnapshot) {
         if (querySnapshot.docs.isNotEmpty) {
           querySnapshot.docs.first.reference.delete();
         }
@@ -81,13 +81,13 @@ class _PartyListState extends State<PartyList> {
     }
   }
 
-  void _searchParty(String query) {
+  void _searchParty(String query) async {
     if (query.isEmpty) {
       _loadParties();
     } else {
-      FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('parties')
-          .where('title', isGreaterThanOrEqualTo: query.toLowerCase())
+          .where('title', isEqualTo: query)
           .get()
           .then((QuerySnapshot querySnapshot) {
         setState(() {
