@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               FadeInUp(
                 duration: const Duration(milliseconds: 2000),
                 child: const Text(
-                  'Pronađi ili organiziraj party blizu tebe u bilo koje doba dana',
+                  'Pronađi party blizu tebe u bilo koje doba dana',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,

@@ -41,10 +41,16 @@ class GridCostumeDetails extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Text(
-                costume,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(
+                      costume,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

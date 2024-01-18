@@ -42,8 +42,8 @@ class PartyDetails extends StatelessWidget {
                     boxShadow: const [
                       BoxShadow(blurRadius: 5.0, offset: Offset(2, 3)),
                     ],
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/home.jpeg'),
+                    image: DecorationImage(
+                      image: NetworkImage(party.image, scale: 1.0),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.circular(25),
@@ -69,7 +69,8 @@ class PartyDetails extends StatelessWidget {
                     children: [
                       FadeInLeft(
                           duration: const Duration(milliseconds: 1500),
-                          child: GridTimeDetails(time: party.startTime)),
+                          child: GridTimeDetails(
+                              time: party.startTime, date: party.date)),
                       FadeInDown(
                           duration: const Duration(milliseconds: 1500),
                           child: GridAlcDetails(alc: party.isAlcNeeded)),

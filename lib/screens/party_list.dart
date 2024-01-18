@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:party_organizer/dummy_data.dart/dummy_data.dart';
 import 'package:party_organizer/models/party.dart';
 import 'package:party_organizer/screens/planned_screen.dart';
 import 'package:party_organizer/widgets/party_list_item.dart';
@@ -17,8 +17,31 @@ class PartyList extends StatefulWidget {
 
 class _PartyListState extends State<PartyList> {
   final textController = TextEditingController();
-  List<Party> parties = allParties;
-  final List<Party> _favoriteParties = [];
+  List<Party> parties = [];
+  List<Party> _favoriteParties = [];
+
+  final CollectionReference _favoritePartiesCollection =
+      FirebaseFirestore.instance.collection('favorites');
+
+  @override
+  void initState() {
+    super.initState();
+    _loadParties();
+  }
+
+  Future<void> _loadParties() async {
+    final partiesSnapshot =
+        await FirebaseFirestore.instance.collection('parties').get();
+    final favoritePartiesSnapshot =
+        await FirebaseFirestore.instance.collection('favorites').get();
+    setState(() {
+      parties =
+          partiesSnapshot.docs.map((doc) => Party.fromMap(doc.data())).toList();
+      _favoriteParties = favoritePartiesSnapshot.docs
+          .map((doc) => Party.fromMap(doc.data()))
+          .toList();
+    });
+  }
 
   void _showInfoMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
@@ -29,14 +52,28 @@ class _PartyListState extends State<PartyList> {
     );
   }
 
-  void _togglePartyFavoriteStatus(Party party) {
+  Future<void> _togglePartyFavoriteStatus(Party party) async {
     final isExisting = _favoriteParties.contains(party);
+
     if (isExisting) {
+      await _favoritePartiesCollection
+          .where('title', isEqualTo: party.title)
+          .where('startTime', isEqualTo: party.startTime)
+          .where('date', isEqualTo: party.date)
+          .get()
+          .then((querySnapshot) {
+        if (querySnapshot.docs.isNotEmpty) {
+          querySnapshot.docs.first.reference.delete();
+        }
+      });
+
       setState(() {
         _favoriteParties.remove(party);
-        _showInfoMessage('Uklonjeno iz planirano');
+        _showInfoMessage('Uklonjeno iz planiranog');
       });
     } else {
+      await _favoritePartiesCollection.add(party.toMap());
+
       setState(() {
         _favoriteParties.add(party);
         _showInfoMessage('Dodano u planirano');
@@ -45,16 +82,24 @@ class _PartyListState extends State<PartyList> {
   }
 
   void _searchParty(String query) {
-    final suggestions = allParties.where((party) {
-      final partyTitle = party.title.toLowerCase();
-      final input = query.toLowerCase();
-
-      return partyTitle.contains(input);
-    }).toList();
-
-    setState(() {
-      parties = suggestions;
-    });
+    if (query.isEmpty) {
+      _loadParties();
+    } else {
+      FirebaseFirestore.instance
+          .collection('parties')
+          .where('title', isGreaterThanOrEqualTo: query.toLowerCase())
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        setState(() {
+          parties = querySnapshot.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+            return Party.fromMap(data);
+          }).toList();
+        });
+      }).catchError((error) {
+        print("Error getting documents: $error");
+      });
+    }
   }
 
   @override
@@ -137,18 +182,34 @@ class _PartyListState extends State<PartyList> {
                 width: MediaQuery.sizeOf(context).width,
                 child: Column(
                   children: [
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: parties.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) => FadeInUp(
-                        duration: const Duration(milliseconds: 1500),
-                        child: PartyListItem(
-                          party: parties[index],
-                          image: const AssetImage('assets/images/home.jpeg'),
-                          onToggleFavorite: _togglePartyFavoriteStatus,
-                        ),
-                      ),
+                    StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('parties')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+
+                        if (snapshot.hasError) {
+                          return const Center(child: Text('Greška'));
+                        }
+
+                        return ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: parties.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => FadeInUp(
+                            duration: const Duration(milliseconds: 1500),
+                            child: PartyListItem(
+                              party: parties[index],
+                              onToggleFavorite: _togglePartyFavoriteStatus,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
