@@ -18,7 +18,7 @@ class PartyList extends StatefulWidget {
 class _PartyListState extends State<PartyList> {
   final textController = TextEditingController();
   List<Party> parties = [];
-  final List<Party> _favoriteParties = [];
+  List<Party> _favoriteParties = [];
 
   final CollectionReference _favoritePartiesCollection =
       FirebaseFirestore.instance.collection('favorites');
@@ -32,9 +32,14 @@ class _PartyListState extends State<PartyList> {
   Future<void> _loadParties() async {
     final partiesSnapshot =
         await FirebaseFirestore.instance.collection('parties').get();
+    final favoritePartiesSnapshot =
+        await FirebaseFirestore.instance.collection('favorites').get();
     setState(() {
       parties =
           partiesSnapshot.docs.map((doc) => Party.fromMap(doc.data())).toList();
+      _favoriteParties = favoritePartiesSnapshot.docs
+          .map((doc) => Party.fromMap(doc.data()))
+          .toList();
     });
   }
 
@@ -82,17 +87,14 @@ class _PartyListState extends State<PartyList> {
     } else {
       FirebaseFirestore.instance
           .collection('parties')
-          .where('title' == query.toLowerCase())
+          .where('title', isGreaterThanOrEqualTo: query.toLowerCase())
           .get()
           .then((QuerySnapshot querySnapshot) {
-        List<Party> suggestions =
-            querySnapshot.docs.map((DocumentSnapshot document) {
-          Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-          return Party.fromMap(data);
-        }).toList();
-
         setState(() {
-          parties = suggestions;
+          parties = querySnapshot.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+            return Party.fromMap(data);
+          }).toList();
         });
       }).catchError((error) {
         print("Error getting documents: $error");
