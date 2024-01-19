@@ -87,7 +87,8 @@ class _PartyListState extends State<PartyList> {
     } else {
       await FirebaseFirestore.instance
           .collection('parties')
-          .where('title', isEqualTo: query)
+          .where('title', isGreaterThanOrEqualTo: query)
+          .where('title', isLessThanOrEqualTo: query + '\uf8ff')
           .get()
           .then((QuerySnapshot querySnapshot) {
         setState(() {
