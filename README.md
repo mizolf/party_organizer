@@ -1,16 +1,9 @@
-# party_organizer
+Party Organizer App in Flutter
 
-A new Flutter project.
+![image](https://github.com/user-attachments/assets/fb6d6690-8037-4e5a-a7f7-d1f549217bf6)
 
-## Getting Started
+![image](https://github.com/user-attachments/assets/1216f27a-b781-4830-a807-0ba38bf4b0ed)
 
-This project is a starting point for a Flutter application.
+![image](https://github.com/user-attachments/assets/a9cd8a54-26b0-4c87-b198-72a92e84d820)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![image](https://github.com/user-attachments/assets/a8e9aa9b-23cd-4505-b84d-9fa2c14270c6)
